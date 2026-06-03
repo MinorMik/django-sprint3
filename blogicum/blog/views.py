@@ -4,7 +4,6 @@ from blog.models import Post, Category
 from django.utils import timezone
 
 
-
 def index(request):
     post_list = Post.objects.filter(
         is_published=True,
@@ -13,7 +12,6 @@ def index(request):
     ).order_by('-pub_date')[:5]
     context = {'post_list': post_list}
     return render(request, 'blog/index.html', context)
-
 
 
 def post_detail(request, post_id):
