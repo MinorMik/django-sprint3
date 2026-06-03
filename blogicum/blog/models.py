@@ -21,7 +21,7 @@ class Category(models.Model):
                                        чтобы скрыть публикацию.''')
     created_at = models.DateTimeField(auto_now_add=True,
                                       verbose_name='Добавлено')
-    
+
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
@@ -49,7 +49,7 @@ class Location(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=256, 
+    title = models.CharField(max_length=256,
                              verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(verbose_name='Дата и время публикации',
