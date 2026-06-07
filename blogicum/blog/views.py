@@ -1,7 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
-from blog.models import Post, Category
 from django.utils import timezone
+
+from blog.models import Post, Category
+
+
+COUNT_POSTS = 5
 
 
 def index(request):
@@ -9,19 +13,18 @@ def index(request):
         is_published=True,
         category__is_published=True,
         pub_date__lte=timezone.now()
-    ).order_by('-pub_date')[:5]
+    )[:COUNT_POSTS]
     context = {'post_list': post_list}
     return render(request, 'blog/index.html', context)
 
 
 def post_detail(request, post_id):
     post = get_object_or_404(
-        Post.objects.all().filter(
-            is_published=True,
-            category__is_published=True,
-            pub_date__lte=timezone.now(),
-            pk=post_id
-        )
+        Post,
+        is_published=True,
+        category__is_published=True,
+        pub_date__lte=timezone.now(),
+        pk=post_id
     )
     context = {'post': post}
     return render(request, 'blog/detail.html', context)
@@ -36,7 +39,7 @@ def category_posts(request, category_id):
         category=category,
         is_published=True,
         pub_date__lte=timezone.now()
-    ).order_by('-pub_date')
+    )
 
     context = {
         'category': category,
